@@ -68,7 +68,7 @@ const DrfApiFetch = () => {
 
   const editTask = (task) => {
     axios
-      .put(`http://127.0.0.1:8000/api/tasks/${task.id}`, task, {
+      .put(`http://127.0.0.1:8000/api/tasks/${task.id}/`, task, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Token 74422bbba49a051fed1491ba9c89ce2b6e813e1c",
@@ -90,6 +90,9 @@ const DrfApiFetch = () => {
             {task.title} : {task.id} :
             <button onClick={() => deleteTask(task.id)}>
               <i className="fas fa-trash-alt"></i>
+            </button>
+            <button onClick={() => setEditedTask(task)}>
+              <i className="fas fa-pen"></i>
             </button>
           </li>
         ))}
@@ -121,7 +124,11 @@ const DrfApiFetch = () => {
         placeholder="New Task"
         required
       />
-      <button onClick={() => newTask(editedTask)}>Create</button>
+      {editedTask.id ? (
+        <button onClick={() => editTask(editedTask)}>Update</button>
+      ) : (
+        <button onClick={() => newTask(editedTask)}>Create</button>
+      )}
     </div>
   );
 };
